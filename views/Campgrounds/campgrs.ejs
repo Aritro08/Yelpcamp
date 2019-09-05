@@ -1,0 +1,25 @@
+<% include /Git/Yelpcamp/views/Partials/header.ejs %>
+
+	<div class="jumbotron">
+		<h1>Campgrounds page</h1>
+		<p>View the best campsites from around the world</p>
+		<a href="/campgrounds/new" class="btn btn-primary">Add new Camp</a>
+	</div>
+
+	<div class="row">
+
+		<% camps.forEach(function(camp){ %>
+
+			<div class="col-md-3 col-sm-6" style="padding-bottom:25px;">
+				<div class="card">
+					<img id="cardimg" src="<%= camp.image %>">
+					<div class="card-body">
+						<h4 class="card-title"><%= camp.name %></h4>
+						<a href="/campgrounds/<%= camp._id %>" class="btn btn-primary">More Info</a>
+					</div>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+
+<% include /Git/Yelpcamp/views/Partials/footer.ejs %>
