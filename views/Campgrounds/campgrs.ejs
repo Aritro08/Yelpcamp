@@ -1,15 +1,33 @@
 <% include /Git/Yelpcamp/views/Partials/header.ejs %>
 
-	<div class="jumbotron">
-		<h1>Campgrounds page</h1>
-		<p>View the best campsites from around the world</p>
-		<a href="/campgrounds/new" class="btn btn-primary">Add new Camp</a>
+	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+		<div class="col-md-12">
+			<% if(noMatch!= null){ %>
+				<div class="alert alert-danger" role="alert">
+			  		<%= noMatch %>
+				</div>
+			<% } %>
+		</div>
 	</div>
 
-	<div class="row">
+	<header class="jumbotron">
+		<h1>Welcome to YelpCamp</h1>
+		<h5 style="font-weight: normal;">View the best campsites from around the world</h5>
+		<br>
+		<p>
+		<form action="/campgrounds" method="GET" class="form-inline">
+			<div class="form-group">
+				<input class="form-control" name="search" placeholder="Campground Search">
+			</div>
+			<div style="padding-left: 10px;" class="form-group">
+				<input class="btn btn-primary" type="submit" value="Search">
+			</div>
+		</form>
+		</p>
+	</header>
 
+	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
 		<% camps.forEach(function(camp){ %>
-
 			<div class="col-md-3 col-sm-6" style="padding-bottom:25px;">
 				<div class="card">
 					<img id="cardimg" src="<%= camp.image %>">

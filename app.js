@@ -55,17 +55,38 @@ app.get("/",function(req,res){
 
 app.get("/campgrounds",function(req,res){
 
-	Campground.find({}, function(err, campground)
+	var noMatch = null;
+	if(req.query.search)
 	{
-		if(err)
-		{
-			console.log(err);
-		}
-		else
-		{
-			res.render("Campgrounds/campgrs",{camps:campground, page:'campgrounds'});
-		}
+		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+		Campground.find({name: regex}, function(err, campground){
+			if(err)
+			{
+				console.log(err);
+			}
+			else
+			{	
+				if(campground.length < 1)
+				{
+					noMatch = "No campgrounds match that query, please try again.";
+				}
+				res.render("Campgrounds/campgrs",{camps:campground, page:'campgrounds', noMatch: noMatch});
+			}
+		});
+	}
+	else
+	{
+		Campground.find({}, function(err, campground){
+			if(err)
+			{
+				console.log(err);
+			}
+			else
+			{
+				res.render("Campgrounds/campgrs",{camps:campground, page:'campgrounds', noMatch: noMatch});
+			}
 	});
+	}
 });
 
 app.get("/campgrounds/new", isLoggedIn, function(req,res){
@@ -354,6 +375,10 @@ function commentOwnership(req, res, next){
 		});
 	}
 }
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 var port = process.env.PORT || 3000;
 app.listen(port, function () {
