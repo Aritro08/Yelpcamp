@@ -2,7 +2,6 @@ var express = require("express"),
 	app = express(),
 	bodyParser= require("body-parser"),
 	mongoose = require("mongoose"),
-	seedDB = require("./seed"),
 	passport = require("passport"),
 	localStrategy = require("passport-local"),
 	expressSession = require("express-session"),
@@ -12,8 +11,6 @@ var express = require("express"),
 	Comment = require("./models/comments"),
 	User = require("./models/users");
 
-
-// seedDB();
 mongoose.connect("mongodb://localhost:27017/yelpCamp", {useNewUrlParser:true});
 app.use(bodyParser.urlencoded({extended:true}));
 app.set("view engine", "ejs");
